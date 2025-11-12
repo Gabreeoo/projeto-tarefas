@@ -1,0 +1,84 @@
+*{
+    margin: 0px;
+    padding: 0px;
+
+}
+
+main{
+    height: 100vh;
+    width: 100%;
+    background-color: rgb(136, 253, 136);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#menuCriar{
+    display: flex;
+    flex-direction: column;
+}
+
+#menuCriar > label{
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+#menuCriar > input{
+    border: none;
+    background-color: rgb(224, 224, 224);
+    border-radius: 3px;
+
+    margin-bottom: 20px;
+}
+
+#menuCriar > input[type=submit]{
+    margin-top: 25px;
+    height: 40px;
+
+    background-color: rgb(3, 218, 3);
+    color: white;
+}
+
+#corpo{
+    width: 80%;
+    height: 400px;
+
+    background-color: white;
+
+    border-radius: 12px;
+}
+
+#corpo > h1 {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.botao{
+    display: flex;
+    justify-content: center;
+}
+
+.botao > button{
+    background-color: green;
+    color: white;
+
+    border: none;
+    border-radius: 3px;
+    
+    width: 100px;
+    height: 30px;
+}
+
+#tarefas{
+    margin: auto;
+    margin-top: 50px;
+    width: 95%;
+}
+
+.tarefa > h2{  
+    font-size: 20px;
+}
+.tarefa > p{
+    font-size: 15px;
+}
