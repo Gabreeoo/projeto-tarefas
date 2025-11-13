@@ -4,14 +4,13 @@
 
 }
 
-main{
-    height: 100vh;
-    width: 100%;
-    background-color: rgb(136, 253, 136);
+body{
+    background-color: #88fd88;
+}
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+main{
+    width: 100%;
+    background-color: #88fd88;
 }
 
 #menuCriar{
@@ -41,8 +40,10 @@ main{
 }
 
 #corpo{
+    margin: auto;
+    margin-top: 100px;
+    padding-bottom: 10px;
     width: 80%;
-    height: 400px;
 
     background-color: white;
 
@@ -51,7 +52,7 @@ main{
 
 #corpo > h1 {
     text-align: center;
-    margin-top: 10px;
+    padding-top: 10px;
 }
 
 .botao{
@@ -74,8 +75,17 @@ main{
     margin: auto;
     margin-top: 50px;
     width: 95%;
+
+    background-color: white;
 }
 
+.tarefa{  
+    padding: 10px;
+    border: 1px solid rgb(148, 148, 148);
+    border-radius: 8px;
+    border-style: dashed;
+    margin-bottom: 15px;
+}
 .tarefa > h2{  
     font-size: 20px;
 }
