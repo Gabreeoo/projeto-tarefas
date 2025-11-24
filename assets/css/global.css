@@ -44,6 +44,7 @@ main{
     margin-top: 100px;
     padding-bottom: 10px;
     width: 80%;
+    max-width: 900px;
 
     background-color: white;
 
@@ -91,4 +92,8 @@ main{
 }
 .tarefa > p{
     font-size: 15px;
+}
+
+.concluida {
+    text-decoration:line-through
 }
