@@ -37,5 +37,6 @@ function criarTarefa(){
     descricaoTarefa = document.getElementById('tarefaDes')
 
     console.log(nomeTarefa,descricaoTarefa)
-
+    nomeTarefa.value = ''
+    descricaoTarefa.value = ''
 }
