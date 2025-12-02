@@ -87,7 +87,12 @@ main{
     border-style: dashed;
     margin-bottom: 15px;
 }
-.tarefa > h2{  
+div.headTarefa{
+    display: flex;
+    gap: 20px;
+}
+
+div.headTarefa > h2{  
     font-size: 20px;
 }
 .tarefa > p{
