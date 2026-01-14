@@ -1,69 +1,123 @@
 window.addEventListener('load', main)
 
-listaTarefas = [
-    {
-        nomeTarefa: 'Prova MOBILE',
-        descricao: 'Prova de desenvolvimento para aparelhos moveis feita pelo professor leonardo. 4° periodo'
-    },
-    {
-        nomeTarefa: 'Apresentação Arianne',
-        descricao: 'Apresentação de arquitetura orientada a repositorio dia 10/12 '
-    }
-]
+
 function main(){
     listarTarefas()
     
-    butao = document.getElementById('butaoCriar')
-    butao.addEventListener('click',() => criarTarefa())
-
+    const butao = document.getElementById('butaoCriar')
+    butao.addEventListener('click', () => criarTarefa())
 }
 
-function listarTarefas() {
-    divcorpo = document.getElementById('tarefas')
-    listaTarefas.forEach(tarefa_ => {
+
+async function listarTarefas() {
+    const divcorpo = document.getElementById('tarefas')
+    divcorpo.innerHTML = ''
+
+    try{
+        const response = await fetch('http://localhost:3000/listarTarefas')
+        if (!response.ok) throw new Error('Erro na requisição')
         
+        const tarefas = await response.json()
+        listaTarefas = tarefas
+
+        listaTarefas.forEach(tarefa_ => {
         const divTarefa = document.createElement('div')
-        const divHeadTarefa = document.createElement('div')
-        const checkboxTarefa = document.createElement('input')
-        checkboxTarefa.type = 'checkbox'
-        const tituloTarefa = document.createElement('h2')
-        const descricaoTarefa = document.createElement('p')
-
         divTarefa.classList.add('tarefa')
-        divHeadTarefa.classList.add('headTarefa')
-        tituloTarefa.textContent = tarefa_.nomeTarefa
-        descricaoTarefa.textContent = tarefa_.descricao
-
-        divHeadTarefa.appendChild(tituloTarefa)
-        divHeadTarefa.appendChild(checkboxTarefa)
-        divTarefa.appendChild(divHeadTarefa)
-        divTarefa.appendChild(descricaoTarefa)
-
+        divTarefa.innerHTML = `
+            <div class="headTarefa">
+                <h2>${tarefa_.tituloTarefa}</h2>
+                <input type="checkbox">
+                <div class="divDelete">
+                    <button class="btnDelete">
+                        <span class="material-symbols-outlined">delete_forever</span>
+                    </button>
+                </div>
+            </div>
+            <p>${tarefa_.descricaoTarefa}</p>
+        `
+        
+        const checkboxTarefa = divTarefa.querySelector('input[type="checkbox"]')
+        const divDelete = divTarefa.querySelector('.divDelete')
+        
+        checkboxTarefa.addEventListener('change', () => {
+            if (checkboxTarefa.checked) {
+                divTarefa.classList.add('concluida')
+                divDelete.classList.remove('divDelete')
+            } else {
+                divTarefa.classList.remove('concluida')
+                divDelete.classList.add('divDelete')
+            }
+        })
+        
+        const butaoDelete = divTarefa.querySelector('.btnDelete')
+        butaoDelete.addEventListener('click', () => deletarTarefa(tarefa_.id))
+        
         divcorpo.appendChild(divTarefa)
+    })
+        
+    } catch(error){
+        console.error(error)
+    }
 
-        checkboxTarefa.addEventListener('change', () =>{
-        if ( checkboxTarefa.checked){
-            divTarefa.classList.add('concluida')
-        } else {
-            divTarefa.classList.remove('concluida')
-        }
-})
-
-
-
-    });
 }
 
-function criarTarefa(){
-    nomeTarefa = document.getElementById('tarefaNome')
-    descricaoTarefa = document.getElementById('tarefaDes')
+async function criarTarefa() {
+    const nomeTarefa = document.getElementById('tarefaNome')
+    const descricaoTarefa = document.getElementById('tarefaDes')
+    
+    if (nomeTarefa.value.trim() && descricaoTarefa.value.trim()) {
 
-    console.log(nomeTarefa,descricaoTarefa)
-    nomeTarefa.value = ''
-    descricaoTarefa.value = ''
+        try{
+            const response = await fetch('http://localhost:3000/criarTarefa',{
+                method: 'POST',
+                headers:{
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nomeTarefa: nomeTarefa.value,
+                    descricaoTarefa: descricaoTarefa.value
+            })
+        })
 
+        if(!response.ok){
+            throw new Error('erro ao criar tarefa')
+        }
 
-    const modalEl = document.getElementById('menuCentral');
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    modal.hide();
+            await response.json()
+
+            listarTarefas() // Re-renderiza a lista
+
+            nomeTarefa.value = ''
+            descricaoTarefa.value = ''
+            
+            const modalEl = document.getElementById('menuCentral')
+            const modal = bootstrap.Modal.getInstance(modalEl)
+            modal.hide()
+            }catch(error){
+                console.error(error)
+            }
+            
+    }
+}
+
+async function deletarTarefa(id) {
+    try{
+        const response = await fetch('http://localhost:3000/deletarTarefa',{
+            method:'DELETE',
+            headers:{
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: id
+            })
+        })
+        if(!response.ok){
+            throw new Error('Erro ao deletar tarefa')
+        }
+
+        listarTarefas()
+
+    }catch(error){
+        console.error(error)
+    }
 }

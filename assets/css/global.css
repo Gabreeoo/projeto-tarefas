@@ -5,12 +5,11 @@
 }
 
 body{
-    background-color: #88fd88;
+    background-color: #a6e5a6;
 }
 
 main{
     width: 100%;
-    background-color: #88fd88;
 }
 
 #menuCriar{
@@ -35,7 +34,7 @@ main{
     margin-top: 25px;
     height: 40px;
 
-    background-color: rgb(3, 218, 3);
+    background-color: rgb(3, 145, 3);
     color: white;
 }
 
@@ -101,4 +100,15 @@ div.headTarefa > h2{
 
 .concluida {
     text-decoration:line-through
+}
+
+span{
+    color: rgb(95, 95, 95);
+}
+.divDelete{
+    visibility: hidden;
+}
+button.btnDelete{
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
 }
